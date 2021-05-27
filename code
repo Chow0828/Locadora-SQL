@@ -1,0 +1,305 @@
+
+insert into cliente VALUES (
+null,
+"Cristhofer",
+"2004-07-28",
+"M",
+"13997702868"
+);
+update cliente set telefone = 997702868 WHERE cd=3;
+show tables;
+select * from categoria;
+select * from filme;
+
+-- exercício 1 - cadastro dos filmes
+insert into filme values (
+null,
+"JACK REACHER: SEM RETORNO",
+"2021-05-25",
+"2016-11-25",
+10,
+1
+);
+insert into filme values (
+null,
+"JOHN WICK 3: PARABELLUM",
+"2019-05-16",
+"2018-12-21",
+7,
+1
+);
+insert into filme values (
+null,
+"Velozes & Furiosos: Hobbs & Shaw",
+"2021-05-25",
+"2019-08-1",
+3,
+2
+);
+insert into filme values (
+null,
+"Capitão América: Guerra Civil",
+"2021-05-25",
+"2016-04-28",
+2,
+2
+);
+
+insert into filme values (
+null,
+"A Ilha da Fantasia",
+"2021-05-25",
+"2020-02-13",
+3,
+3
+);
+insert into filme values (
+null,
+"Caça Mortal",
+"2021-05-25",
+"2020-10-01",
+3,
+3
+);
+insert into filme values (
+null,
+"Midway - Batalha em Alto Mar",
+"2021-05-25",
+"2019-11-21",
+3,
+4
+);
+insert into filme values (
+null,
+"Beleza Oculta",
+"2021-05-25",
+"2017-01-26",
+3,
+4
+);
+insert into filme values (
+null,
+"Project Power",
+"2021-05-25",
+"2020-08-14",
+5,
+5
+);
+insert into filme values (
+null,
+"O Poço",
+"2021-05-25",
+"2020-02-21",
+5,
+5
+);
+insert into filme values (
+null,
+"A Freira",
+"2021-05-25",
+"2018-09-06",
+1,
+6
+);
+insert into filme values (
+null,
+"Um Lugar Silencioso",
+"2021-05-25",
+"2018-05-05",
+5,
+6
+);
+insert into filme values (
+null,
+"Deadpool 2",
+"2021-05-25",
+"2018-05-17",
+10,
+7
+);
+insert into filme values (
+null,
+"Minha Mãe É uma Peça",
+"2021-05-25",
+"2013-06-21",
+4,
+7
+);
+insert into filme values (
+null,
+"Querido John",
+"2021-05-25",
+"2010-01-24",
+5,
+8
+);
+insert into filme values (
+null,
+"As Vantagens de Ser Invisível",
+"2021-05-25",
+"2012-10-19",
+1,
+8
+);
+-- exercício 2 Cadastrar locações em seu nome para 2 filmes a sua escolha, sem definir a data de devolução.
+
+select * from locacao;
+select * from cliente;
+
+insert into locacao values (
+null,
+"2021-05-25",
+18,
+null
+);
+
+update locacao set dt_devolucao = null WHERE id=18;
+
+insert into itens values (
+18,
+116
+);
+
+insert into itens values (
+3,
+114
+);
+
+insert into locacao values (
+null,
+"2021-05-25",
+18,
+null
+);
+
+-- exercício 3 atualizar o cadastro de locação em seu nome colocando a data de devolução
+
+update locacao set dt_devolucao = "2021-05-30" WHERE id=18;
+
+-- exercício 4 consultar filmes alugados
+
+SELECT nome FROM filme WHERE cd IN
+(SELECT id FROM locacao);
+
+
+-- exercício 5 consultar clientes que tenham feito locação e ainda não tenham devolvido
+ 
+SELECT cd, nome FROM cliente
+INNER JOIN locacao
+ON id_cliente = cd
+ORDER BY id_cliente ASC;
+
+-- exercício 6 consultar filmes que tenham mais de 2 exemplares
+
+SELECT nome, qt_exemplares FROM filme
+WHERE qt_exemplares >= 2;
+
+-- exercício 7 consultar se está disponível para locacao = LAGOA AZUL
+
+SELECT cd, nome FROM filme WHERE nome = "LAGOA AZUL" NOT IN
+(SELECT id_filme FROM itens);
+
+-- exercício 8 consultar o telefone do contato do cliente PAULO COPPE - cliente não cadastrado, vou consultar do cliente rodolfo.
+
+SELECT nome, telefone FROM cliente WHERE nome = "Paulo";
+
+-- exercício 9 consultar as locações da cliente Beatriz, mostrando os filmes
+
+SELECT cd, nome FROM cliente 
+INNER JOIN locacao
+ON id_cliente = cd
+WHERE nome = "Beatriz";
+
+-- exercício 10 atualizar o telefone de contato do cliente "Ayan" - cliente não existe.
+
+SELECT * FROM cliente;
+UPDATE cliente SET telefone = 141414141 WHERE cd=17;
+
+-- exercício 11 realizar a locação dos filmes "PIRATAS DO VALE DO SILÍCIO" E "PIRATAS DO CARIBE" para o cliente ABNER -- filme não cadastrados.
+
+SELECT * FROM filme;
+SELECT * FROM cliente;
+SELECT * FROM locacao;
+
+insert into locacao values(
+null, 
+"2021-05-26",
+5,
+null
+);
+
+insert into itens values(
+5,
+86
+);
+insert into locacao values(
+null, 
+"2021-05-27",
+5,
+null
+);
+insert into itens values(
+5,
+87
+);
+
+-- exercício 12 atualizar a locação do cliente abner informando a data de devolução
+
+SELECT * FROM locacao;
+update locacao set dt_devolucao = "2021-05-31" WHERE id=18;
+update locacao set dt_devolucao = "2021-06-01" WHERE id=19;
+
+-- exercício 13 consulte todos os filmes em ordem alfabética que pertencem a categoria "ação"
+
+SELECT nome FROM filme WHERE id_categoria IN
+(SELECT cd FROM categoria WHERE cd = 1) ORDER BY nome ASC;
+
+-- exercício 14 consultar todos os clientes chamados JOÃO
+
+SELECT * FROM cliente WHERE nome = "João";
+
+-- exercício 15 consultar todos os filmes lançados em 2000
+
+SELECT cd, nome, dt_lancamento FROM filme  WHERE YEAR(dt_lancamento) = 2000;
+
+SELECT  year(dt_lancamento)  AS ano FROM filme;
+SELECT * FROM filme;
+
+-- exercício 16 consultar o primeiro filme que foi cadastrado na locadora
+
+SELECT * FROM filme WHERE cd = 1;
+
+-- exercício 17 consulte todos os filmes devolvidos hoje
+
+SELECT * FROM locacao WHERE dt_devolucao = "2021-05-20";
+
+-- exercício 18 consulte a quantidade de locações feitas hoje
+
+SELECT * FROM locacao WHERE dt_locacao = "2021-05-20";
+
+-- exercício 19 mostre a quantidade total de exemplares cadastrados na locadora
+
+SELECT COUNT(id) as Total FROM locacao;
+
+-- exercício 20 mostre a quantidade total de filmes alugados hoje
+
+SELECT COUNT(dt_locacao) AS Total FROM locacao WHERE dt_locacao = "2021-05-20";
+
+-- exercício 21 mostre a média de exemplares de filmes cadastrados
+
+SELECT ROUND(AVG(cd),2) AS media FROM filme;
+
+-- exercício 22  consulte o nome de todos os clientes aniversariantes do Mês 2(fevereiro)
+
+SELECT nome, dt_nasc FROM cliente WHERE Month(dt_nasc) = 02;
+
+-- exercício 23 mostre o ultimo filme cadastrado na locadora
+
+SELECT cd, nome FROM filme ORDER BY cd DESC;
+
+-- exercício 24 mostre a quantidade de vezes que o filme 9 foi alugado
+
+SELECT * FROM itens
+INNER JOIN filme
+ON id_filme  = cd
+WHERE cd = 9;
